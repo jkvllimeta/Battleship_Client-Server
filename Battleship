@@ -1,0 +1,101 @@
+//Original Single Player Code - Unused in Client-Server
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package battleship_sp;
+
+import java.util.Arrays;
+import java.util.Scanner;
+/**
+ *
+ * @author Joseph
+ */
+public class Battleship_SP {
+
+    /**
+     * @param args the command line arguments
+     */
+    
+    static Scanner a = new Scanner(System.in);
+    static int player1Attacks = 10;
+    static int player2Attacks = 10;
+    
+    static int player1Units = 5;
+    static int player2Units = 5;
+    
+    static int carrierLife = 5;
+    static int battleshipLife = 4;
+    static int cruiserLife = 3;
+    static int submarineLife = 2;
+    static int destroyerLife = 1;
+    
+    static int kill = 0;
+    
+    static int turnCounter = 2;
+    
+
+    
+    public static void main(String[] args) {
+        // TODO code application logic here
+        
+        Player p1 = new Player();
+        Player p2 = new Player();
+        
+        p1.initializeGameBoard();
+        p2.initializeGameBoard();
+        //initializeGameBoard(gameBoard);
+        
+        System.out.println("Player 1: Place your Ship");
+        p1.placeShip();
+        printBoardStatus(p1.gameBoard);
+        
+        System.out.println("Player 2: Place your Ship");
+        p2.placeShip();
+        printBoardStatus(p2.gameBoard);
+        
+        while (p1.ammunition + p2.ammunition > 0 || kill == 0){
+        //initializeGameBoard(gameBoard);
+        //placeShip(gameBoard, rowPlace, colPlace);
+        if (turnCounter % 2 == 0){
+        System.out.println("Player 1's Turn:");
+        p1.attackShip(p2.gameBoard);
+        gameCheck(p1.ammunition, p1.killCount);
+        printBoardStatus(p2.gameBoard);
+        } else {
+        System.out.println("Player 2's Turn:");
+        p2.attackShip(p1.gameBoard);
+        gameCheck(p2.ammunition, p2.killCount);
+        printBoardStatus(p1.gameBoard);
+        }
+        
+        turnCounter++;
+    }
+}
+    
+    public static void printBoardStatus(String[][] gameBoard){
+        
+        for(int i = 0; i < gameBoard.length; i++){
+            for(int j = 0; j < gameBoard[0].length; j++){
+                System.out.print(gameBoard[i][j] + " ");
+            }
+            System.out.println("");
+        }
+    }
+   
+    
+    public static void gameCheck (int attacks, int kill){
+        if(attacks == 0){
+            System.out.println("You are out of attacks. Restart the game.");
+            System.exit(0);
+        } else if (kill == 1) {
+            System.out.println("You win the game!");
+            System.exit(0);
+        } else {
+            System.out.println("Prepare for the next turn.");
+        }
+    }
+    
+}
