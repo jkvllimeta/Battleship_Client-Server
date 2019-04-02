@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package battleship_sp;
+import java.io.*;
+import java.net.*;
+/**
+ *
+ * @author Joseph
+ */
+public class Client {
+    
+    private String host = "localhost";
+    private int serverPort = 8000;
+    private DataInputStream fromServer;
+    private DataOutputStream toServer;
+    
+    public void establishConnection() {
+        try{
+            Socket socket = new Socket(host, serverPort);
+            
+            fromServer = new DataInputStream(socket.getInputStream());
+            toServer = new DataOutputStream(socket.getOutputStream());
+            
+            new Thread (()-> {
+                try{
+                    int playerTurn = fromServer.readInt();
+                
+                    if(playerTurn == 1){
+                    
+                }
+            
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            
+            }).start();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+}
